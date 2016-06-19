@@ -11,6 +11,36 @@ public class LoginPresenter {
     }
 
     public void onAttemptLogin(String email, String password) {
-        // TODO Handle login attempt.
+        view.clearErrors();
+
+        boolean cancelled = false;
+        if (email == null || email.isEmpty()) {
+            view.showEmailRequiredError();
+            view.focusOnEmail();
+            cancelled = true;
+        } else if (!isEmailValid(email)) {
+            view.showEmailInvalidError();
+            view.focusOnEmail();
+            cancelled = true;
+        }
+
+        if (password != null && !password.isEmpty() && !isPasswordValid(password)) {
+            view.showPasswordTooShortError();
+            if (!cancelled) view.focusOnPassword();
+            cancelled = true;
+        }
+
+        if (!cancelled) {
+            view.showProgress();
+            view.attemptLogin(email, password);
+        }
+    }
+
+    private boolean isEmailValid(String email) {
+        return email.contains("@");
+    }
+
+    private boolean isPasswordValid(String password) {
+        return password.length() > 4;
     }
 }

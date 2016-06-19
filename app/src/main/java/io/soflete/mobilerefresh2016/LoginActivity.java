@@ -130,42 +130,46 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     @Override
     public void attemptLogin(String email, String password) {
+        if (mAuthTask != null) return;
 
+        mAuthTask = new UserLoginTask(email, password);
+        mAuthTask.execute((Void) null);
     }
 
     @Override
     public void clearErrors() {
-
+        mEmailView.setError(null);
+        mPasswordView.setError(null);
     }
 
     @Override
     public void focusOnEmail() {
-
+        mEmailView.requestFocus();
     }
 
     @Override
     public void focusOnPassword() {
-
+        mPasswordView.requestFocus();
     }
 
     @Override
     public void showEmailInvalidError() {
-
+        mEmailView.setError(getString(R.string.error_invalid_email));
     }
 
     @Override
     public void showEmailRequiredError() {
-
+        mEmailView.setError(getString(R.string.error_field_required));
     }
 
     @Override
     public void showPasswordTooShortError() {
-
+        mPasswordView.setError(getString(R.string.error_invalid_password));
     }
 
     @Override
     public void showProgress() {
-
+        showProgress(true);
     }
 
     private boolean isEmailValid(String email) {
@@ -218,7 +222,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
                 if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                    attemptLogin();
+                    final String email = mEmailView.getText().toString();
+                    final String password = mPasswordView.getText().toString();
+                    loginPresenter.onAttemptLogin(email, password);
                     return true;
                 }
                 return false;
@@ -229,7 +235,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                attemptLogin();
+                final String email = mEmailView.getText().toString();
+                final String password = mPasswordView.getText().toString();
+                loginPresenter.onAttemptLogin(email, password);
             }
         });
 
