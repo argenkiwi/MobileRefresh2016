@@ -5,11 +5,11 @@ package io.soflete.mobilerefresh2016;
  */
 public class LoginPresenter implements LoginUseCase.Listener {
     private final LoginView view;
-    private final LoginUseCase logInUseCase;
+    private final LoginUseCase loginUseCase;
 
-    public LoginPresenter(LoginView view, LoginUseCase logInUseCase) {
+    public LoginPresenter(LoginView view, LoginUseCase loginUseCase) {
         this.view = view;
-        this.logInUseCase = logInUseCase;
+        this.loginUseCase = loginUseCase;
     }
 
     public void onAttemptLogin(String email, String password) {
@@ -34,7 +34,7 @@ public class LoginPresenter implements LoginUseCase.Listener {
 
         if (!cancelled) {
             view.showProgress();
-            logInUseCase.execute(email, password, this);
+            loginUseCase.execute(email, password, this);
         }
     }
 
@@ -59,7 +59,7 @@ public class LoginPresenter implements LoginUseCase.Listener {
     }
 
     public void onStop() {
-        logInUseCase.cancel();
+        loginUseCase.cancel();
     }
 
     @Override

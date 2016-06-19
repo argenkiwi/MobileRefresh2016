@@ -90,25 +90,19 @@ public class LoginUseCase {
                 mListener.onCancelled();
                 mListener = null;
             }
-//            showProgress(false);
         }
 
         @Override
         protected void onPostExecute(final Boolean success) {
             mAuthTask = null;
-//            showProgress(false);
-
             if (success) {
                 if (mListener != null) {
                     mListener.onSuccess();
                     mListener = null;
                 }
-//                finish();
             } else if (mListener != null) {
                 mListener.onError();
                 mListener = null;
-//            mPasswordView.setError(getString(R.string.error_incorrect_password));
-//            mPasswordView.requestFocus();
             }
         }
     }
