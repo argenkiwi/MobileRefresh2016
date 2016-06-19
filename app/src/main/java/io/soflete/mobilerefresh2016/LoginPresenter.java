@@ -9,4 +9,8 @@ public class LoginPresenter {
     public LoginPresenter(LoginView view) {
         this.view = view;
     }
+
+    public void onAttemptLogin(String email, String password) {
+        // TODO Handle login attempt.
+    }
 }

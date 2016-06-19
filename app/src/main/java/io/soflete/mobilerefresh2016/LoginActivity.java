@@ -128,6 +128,46 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
     }
 
+    @Override
+    public void attemptLogin(String email, String password) {
+
+    }
+
+    @Override
+    public void clearErrors() {
+
+    }
+
+    @Override
+    public void focusOnEmail() {
+
+    }
+
+    @Override
+    public void focusOnPassword() {
+
+    }
+
+    @Override
+    public void showEmailInvalidError() {
+
+    }
+
+    @Override
+    public void showEmailRequiredError() {
+
+    }
+
+    @Override
+    public void showPasswordTooShortError() {
+
+    }
+
+    @Override
+    public void showProgress() {
+
+    }
+
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
         return email.contains("@");
