@@ -3,11 +3,13 @@ package io.soflete.mobilerefresh2016;
 /**
  * Created by leandro on 19/06/16.
  */
-public class LoginPresenter {
+public class LoginPresenter implements LoginUseCase.Listener {
     private final LoginView view;
+    private final LoginUseCase logInUseCase;
 
-    public LoginPresenter(LoginView view) {
+    public LoginPresenter(LoginView view, LoginUseCase logInUseCase) {
         this.view = view;
+        this.logInUseCase = logInUseCase;
     }
 
     public void onAttemptLogin(String email, String password) {
@@ -32,7 +34,7 @@ public class LoginPresenter {
 
         if (!cancelled) {
             view.showProgress();
-            view.attemptLogin(email, password);
+            logInUseCase.execute(email, password, this);
         }
     }
 
@@ -42,5 +44,27 @@ public class LoginPresenter {
 
     private boolean isPasswordValid(String password) {
         return password.length() > 4;
+    }
+
+    @Override
+    public void onCancelled() {
+        view.hideProgress();
+    }
+
+    @Override
+    public void onError() {
+        view.hideProgress();
+        view.focusOnPassword();
+        view.showIncorrectPasswordError();
+    }
+
+    public void onStop() {
+        logInUseCase.cancel();
+    }
+
+    @Override
+    public void onSuccess() {
+        view.hideProgress();
+        view.finish();
     }
 }

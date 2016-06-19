@@ -16,7 +16,12 @@ public class LoginModule {
     }
 
     @Provides
-    public LoginPresenter providePresenter(){
-        return new LoginPresenter(view);
+    public LoginUseCase provideLoginUseCase(){
+        return new LoginUseCase();
+    }
+
+    @Provides
+    public LoginPresenter providePresenter(LoginUseCase loginUseCase){
+        return new LoginPresenter(view, loginUseCase);
     }
 }
