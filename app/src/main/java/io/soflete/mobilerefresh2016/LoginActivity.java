@@ -30,12 +30,14 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import static android.Manifest.permission.READ_CONTACTS;
 
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
+public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor>, LoginView {
 
     /**
      * Id to identity READ_CONTACTS permission request.
@@ -50,6 +52,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             "foo@example.com:hello",
             "bar@example.com:world"
     };
+
+    @Inject
+    LoginPresenter loginPresenter;
 
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
@@ -158,6 +163,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        DaggerLoginComponent.builder()
+                .loginModule(new LoginModule(this))
+                .build().inject(this);
+
         setContentView(R.layout.activity_login);
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
