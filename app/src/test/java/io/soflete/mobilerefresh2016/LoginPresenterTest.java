@@ -64,7 +64,7 @@ public class LoginPresenterTest {
     @Test
     public void shouldFocusOnEmailOnMultipleErrors(){
         presenter.onAttemptLogin("notanemail", "1234");
-        verify(view).focusOnPassword();
+        verify(view).focusOnEmail();
     }
 
     @Test
