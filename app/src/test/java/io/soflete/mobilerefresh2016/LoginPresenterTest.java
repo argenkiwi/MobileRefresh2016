@@ -22,9 +22,12 @@ public class LoginPresenterTest {
     @Mock
     private LoginUseCase logInUseCase;
 
+    @Mock
+    private GetEmailAddressesUseCase getEmailAddressesUseCase;
+
     @Before
     public void setUp() throws Exception {
-        presenter = new LoginPresenter(view, logInUseCase);
+        presenter = new LoginPresenter(view, logInUseCase, getEmailAddressesUseCase);
     }
 
     @Test
