@@ -37,9 +37,6 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     @Inject
     LoginPresenter loginPresenter;
 
-    @Inject
-    GetEmailAddressesUseCase getEmailAddressesUseCase;
-
     // UI references.
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
@@ -128,9 +125,9 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
                 .build().inject(this);
 
         setContentView(R.layout.activity_login);
+
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
-        populateAutoComplete();
 
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -173,14 +170,21 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        loginPresenter.onStart();
+    }
+
+    @Override
     protected void onStop() {
         super.onStop();
         loginPresenter.onStop();
     }
 
-    private void populateAutoComplete() {
+    @Override
+    public void populateAutoComplete() {
         if (!mayRequestContacts()) return;
-        loginPresenter.onPopulateAutocomplete();
+        loginPresenter.onLoadEmailAddresses();
     }
 
     /**

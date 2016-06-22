@@ -27,4 +27,6 @@ public interface LoginView {
     void showProgress();
 
     void addEmailsToAutoComplete(List<String> emails);
+
+    void populateAutoComplete();
 }

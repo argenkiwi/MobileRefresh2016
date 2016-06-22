@@ -6,6 +6,9 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.ArrayList;
+
+import static org.mockito.Matchers.anyListOf;
 import static org.mockito.Mockito.verify;
 
 /**
@@ -75,7 +78,7 @@ public class LoginPresenterTest {
     }
 
     @Test
-    public void shouldFocusOnPasswordOnError(){
+    public void shouldFocusOnPasswordOnError() {
         presenter.onError();
         verify(view).focusOnPassword();
     }
@@ -127,5 +130,24 @@ public class LoginPresenterTest {
     public void shouldShowProgress() {
         presenter.onAttemptLogin("valid@email.yes", "12345");
         verify(view).showProgress();
+    }
+
+    @Test
+    public void shouldPopulateAutoComplete() {
+        presenter.onStart();
+        verify(view).populateAutoComplete();
+    }
+
+    @Test
+    public void shouldLoadEmailAddresses() {
+        presenter.onLoadEmailAddresses();
+        verify(getEmailAddressesUseCase).execute(presenter);
+    }
+
+    @Test
+    public void shouldAddEmailAddresses() {
+        final ArrayList<String> emails = new ArrayList<>();
+        presenter.onEmailAddressesLoaded(emails);
+        verify(view).addEmailsToAutoComplete(emails);
     }
 }

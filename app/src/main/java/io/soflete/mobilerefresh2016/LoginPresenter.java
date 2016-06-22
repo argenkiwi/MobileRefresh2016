@@ -73,12 +73,16 @@ public class LoginPresenter implements LoginUseCase.Listener, GetEmailAddressesU
         view.finish();
     }
 
-    public void onPopulateAutocomplete() {
+    public void onLoadEmailAddresses() {
         getEmailAddressesUseCase.execute(this);
     }
 
     @Override
     public void onEmailAddressesLoaded(List<String> emails) {
         view.addEmailsToAutoComplete(emails);
+    }
+
+    public void onStart() {
+        view.populateAutoComplete();
     }
 }
