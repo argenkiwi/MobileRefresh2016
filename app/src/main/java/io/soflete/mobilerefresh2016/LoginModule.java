@@ -11,6 +11,7 @@ import android.support.v4.content.Loader;
 import dagger.Lazy;
 import dagger.Module;
 import dagger.Provides;
+import io.soflete.signin.SignInView;
 
 /**
  * Created by leandro on 19/06/16.
@@ -18,9 +19,9 @@ import dagger.Provides;
 @Module
 public class LoginModule {
 
-    private LoginView view;
+    private SignInView view;
 
-    public LoginModule(LoginView view) {
+    public LoginModule(SignInView view) {
         this.view = view;
     }
 

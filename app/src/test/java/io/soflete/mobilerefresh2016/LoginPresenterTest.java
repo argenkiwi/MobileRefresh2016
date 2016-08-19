@@ -8,7 +8,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 
-import static org.mockito.Matchers.anyListOf;
 import static org.mockito.Mockito.verify;
 
 /**

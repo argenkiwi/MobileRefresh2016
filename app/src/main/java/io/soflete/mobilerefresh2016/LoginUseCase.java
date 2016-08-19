@@ -2,10 +2,12 @@ package io.soflete.mobilerefresh2016;
 
 import android.os.AsyncTask;
 
+import io.soflete.signin.SignInInteractor;
+
 /**
  * Created by leandro on 20/06/16.
  */
-public class LoginUseCase {
+public class LoginUseCase implements SignInInteractor {
 
     /**
      * A dummy authentication store containing known user names and passwords.
@@ -36,14 +38,6 @@ public class LoginUseCase {
 
         mAuthTask = new UserLoginTask(email, password);
         mAuthTask.execute((Void) null);
-    }
-
-    public interface Listener {
-        void onCancelled();
-
-        void onError();
-
-        void onSuccess();
     }
 
     /**

@@ -22,12 +22,14 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.soflete.signin.SignInView;
+
 import static android.Manifest.permission.READ_CONTACTS;
 
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends AppCompatActivity implements LoginView {
+public class LoginActivity extends AppCompatActivity implements SignInView {
 
     /**
      * Id to identity READ_CONTACTS permission request.

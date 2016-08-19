@@ -1,11 +1,11 @@
-package io.soflete.mobilerefresh2016;
+package io.soflete.signin;
 
 import java.util.List;
 
 /**
  * Created by leandro on 19/06/16.
  */
-public interface LoginView {
+public interface SignInView {
     void clearErrors();
 
     void finish();

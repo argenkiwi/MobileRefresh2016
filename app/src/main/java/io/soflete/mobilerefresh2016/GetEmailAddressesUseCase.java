@@ -9,11 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dagger.Lazy;
+import io.soflete.signin.EmailsInteractor;
 
 /**
  * Created by leandro on 22/06/16.
  */
-public class GetEmailAddressesUseCase implements LoaderManager.LoaderCallbacks<Cursor> {
+public class GetEmailAddressesUseCase implements EmailsInteractor,
+        LoaderManager.LoaderCallbacks<Cursor> {
 
     final int ADDRESS = 0;
 
@@ -54,9 +56,5 @@ public class GetEmailAddressesUseCase implements LoaderManager.LoaderCallbacks<C
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
 
-    }
-
-    public interface Listener {
-        void onEmailAddressesLoaded(List<String> emails);
     }
 }

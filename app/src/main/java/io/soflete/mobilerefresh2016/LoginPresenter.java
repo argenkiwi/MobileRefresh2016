@@ -2,15 +2,17 @@ package io.soflete.mobilerefresh2016;
 
 import java.util.List;
 
+import io.soflete.signin.SignInView;
+
 /**
  * Created by leandro on 19/06/16.
  */
 public class LoginPresenter implements LoginUseCase.Listener, GetEmailAddressesUseCase.Listener {
-    private final LoginView view;
+    private final SignInView view;
     private final LoginUseCase loginUseCase;
     private final GetEmailAddressesUseCase getEmailAddressesUseCase;
 
-    public LoginPresenter(LoginView view, LoginUseCase loginUseCase,
+    public LoginPresenter(SignInView view, LoginUseCase loginUseCase,
                           GetEmailAddressesUseCase getEmailAddressesUseCase) {
         this.view = view;
         this.loginUseCase = loginUseCase;
