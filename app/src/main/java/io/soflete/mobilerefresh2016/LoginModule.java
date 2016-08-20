@@ -11,6 +11,8 @@ import android.support.v4.content.Loader;
 import dagger.Lazy;
 import dagger.Module;
 import dagger.Provides;
+import io.soflete.signin.EmailsInteractor;
+import io.soflete.signin.SignInInteractor;
 import io.soflete.signin.SignInPresenter;
 import io.soflete.signin.SignInView;
 
@@ -27,20 +29,20 @@ public class LoginModule {
     }
 
     @Provides
-    public EmailsInteractorImpl provideGetEmailAddressesUseCase(Lazy<Loader<Cursor>> lazyLoader,
-                                                                LoaderManager loaderManager) {
+    public EmailsInteractor provideEmailsInteractor(Lazy<Loader<Cursor>> lazyLoader,
+                                                    LoaderManager loaderManager) {
         return new EmailsInteractorImpl(lazyLoader, loaderManager);
     }
 
     @Provides
-    public SignInInteractorImpl provideLoginUseCase() {
+    public SignInInteractor provideLoginUseCase() {
         return new SignInInteractorImpl();
     }
 
     @Provides
-    public SignInPresenter providePresenter(SignInInteractorImpl loginUseCase,
-                                            EmailsInteractorImpl getEmailAddressesUseCase) {
-        return new SignInPresenter(view, loginUseCase, getEmailAddressesUseCase);
+    public SignInPresenter providePresenter(SignInInteractor signInInteractor,
+                                            EmailsInteractor emailsInteractor) {
+        return new SignInPresenter(view, signInInteractor, emailsInteractor);
     }
 
     @Provides
