@@ -5,13 +5,13 @@ import java.util.List;
 /**
  * Created by leandro on 19/06/16.
  */
-public class LoginPresenter implements SignInInteractor.Listener, EmailsInteractor.Listener {
+public class SignInPresenter implements SignInInteractor.Listener, EmailsInteractor.Listener {
     private final SignInView view;
     private final SignInInteractor signInInteractor;
     private final EmailsInteractor emailsInteractor;
 
-    public LoginPresenter(SignInView view, SignInInteractor signInInteractor,
-                          EmailsInteractor emailsInteractor) {
+    public SignInPresenter(SignInView view, SignInInteractor signInInteractor,
+                           EmailsInteractor emailsInteractor) {
         this.view = view;
         this.signInInteractor = signInInteractor;
         this.emailsInteractor = emailsInteractor;

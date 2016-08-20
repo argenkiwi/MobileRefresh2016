@@ -1,4 +1,4 @@
-package io.soflete.mobilerefresh2016;
+package io.soflete.signin;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -8,30 +8,28 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 
-import io.soflete.signin.LoginPresenter;
-
 import static org.mockito.Mockito.verify;
 
 /**
- * Created by leandro on 19/06/16.
+ * Created by leandro on 20/08/16.
  */
 @RunWith(MockitoJUnitRunner.class)
-public class LoginPresenterTest {
+public class SignInPresenterTest {
 
-    private LoginPresenter presenter;
-
-    @Mock
-    private LoginView view;
+    private SignInPresenter presenter;
 
     @Mock
-    private SignInInteractorImpl logInUseCase;
+    private SignInView view;
 
     @Mock
-    private EmailsInteractorImpl getEmailAddressesUseCase;
+    private SignInInteractor signInInteractor;
+
+    @Mock
+    private EmailsInteractor emailsInteractor;
 
     @Before
     public void setUp() throws Exception {
-        presenter = new LoginPresenter(view, logInUseCase, getEmailAddressesUseCase);
+        presenter = new SignInPresenter(view, signInInteractor, emailsInteractor);
     }
 
     @Test
@@ -45,13 +43,13 @@ public class LoginPresenterTest {
         final String email = "valid@email.yes";
         final String password = "12345";
         presenter.onAttemptLogin(email, password);
-        verify(logInUseCase).execute(email, password, presenter);
+        verify(signInInteractor).execute(email, password, presenter);
     }
 
     @Test
     public void shouldCancelLoginAttempt() {
         presenter.onStop();
-        verify(logInUseCase).cancel();
+        verify(signInInteractor).cancel();
     }
 
     @Test
@@ -142,7 +140,7 @@ public class LoginPresenterTest {
     @Test
     public void shouldLoadEmailAddresses() {
         presenter.onLoadEmailAddresses();
-        verify(getEmailAddressesUseCase).execute(presenter);
+        verify(emailsInteractor).execute(presenter);
     }
 
     @Test

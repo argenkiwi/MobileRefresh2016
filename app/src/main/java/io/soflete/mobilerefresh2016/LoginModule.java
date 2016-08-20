@@ -11,7 +11,7 @@ import android.support.v4.content.Loader;
 import dagger.Lazy;
 import dagger.Module;
 import dagger.Provides;
-import io.soflete.signin.LoginPresenter;
+import io.soflete.signin.SignInPresenter;
 import io.soflete.signin.SignInView;
 
 /**
@@ -38,9 +38,9 @@ public class LoginModule {
     }
 
     @Provides
-    public LoginPresenter providePresenter(SignInInteractorImpl loginUseCase,
-                                           EmailsInteractorImpl getEmailAddressesUseCase) {
-        return new LoginPresenter(view, loginUseCase, getEmailAddressesUseCase);
+    public SignInPresenter providePresenter(SignInInteractorImpl loginUseCase,
+                                            EmailsInteractorImpl getEmailAddressesUseCase) {
+        return new SignInPresenter(view, loginUseCase, getEmailAddressesUseCase);
     }
 
     @Provides

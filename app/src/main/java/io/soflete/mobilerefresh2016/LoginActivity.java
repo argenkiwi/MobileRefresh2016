@@ -22,7 +22,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import io.soflete.signin.LoginPresenter;
+import io.soflete.signin.SignInPresenter;
 import io.soflete.signin.SignInView;
 
 import static android.Manifest.permission.READ_CONTACTS;
@@ -38,7 +38,7 @@ public class LoginActivity extends AppCompatActivity implements SignInView {
     private static final int REQUEST_READ_CONTACTS = 0;
 
     @Inject
-    LoginPresenter loginPresenter;
+    SignInPresenter loginPresenter;
 
     // UI references.
     private AutoCompleteTextView mEmailView;
