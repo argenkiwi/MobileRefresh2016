@@ -1,8 +1,9 @@
-package io.soflete.mobilerefresh2016;
+package io.soflete.signin;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,22 +22,16 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
-import io.soflete.signin.SignInPresenter;
-import io.soflete.signin.SignInView;
-
 import static android.Manifest.permission.READ_CONTACTS;
 
 /**
  * Created by leandro on 20/08/16.
  */
-public class LoginFragment extends Fragment implements SignInView {
+public class SignInFragment extends Fragment implements SignInView {
 
     private static final int REQUEST_READ_CONTACTS = 0;
 
-    @Inject
-    SignInPresenter loginPresenter;
+    private SignInPresenter loginPresenter;
 
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
@@ -96,19 +91,24 @@ public class LoginFragment extends Fragment implements SignInView {
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        DaggerLoginComponent.builder()
-                .fragmentActivityModule(new FragmentActivityModule(getActivity()))
-                .loginModule(new LoginModule(this))
-                .build().inject(this);
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        Activity activity;
+        try {
+            activity = (Activity) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement OnHeadlineSelectedListener");
+        }
+
+        loginPresenter = activity.getPresenter(this);
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.activity_login, container, false);
+        return inflater.inflate(R.layout.fragment_sign_in, container, false);
     }
 
     @Override
@@ -219,5 +219,9 @@ public class LoginFragment extends Fragment implements SignInView {
     @Override
     public void showProgress() {
         showProgress(true);
+    }
+
+    public interface Activity {
+        SignInPresenter getPresenter(SignInView view);
     }
 }

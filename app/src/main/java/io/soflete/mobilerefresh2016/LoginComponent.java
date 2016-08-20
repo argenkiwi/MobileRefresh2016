@@ -11,6 +11,4 @@ import dagger.Component;
 })
 public interface LoginComponent {
     void inject(LoginActivity activity);
-
-    void inject(LoginFragment loginFragment);
 }
