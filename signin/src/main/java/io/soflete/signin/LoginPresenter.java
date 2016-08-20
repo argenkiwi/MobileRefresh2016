@@ -1,22 +1,20 @@
-package io.soflete.mobilerefresh2016;
+package io.soflete.signin;
 
 import java.util.List;
-
-import io.soflete.signin.SignInView;
 
 /**
  * Created by leandro on 19/06/16.
  */
-public class LoginPresenter implements LoginUseCase.Listener, GetEmailAddressesUseCase.Listener {
+public class LoginPresenter implements SignInInteractor.Listener, EmailsInteractor.Listener {
     private final SignInView view;
-    private final LoginUseCase loginUseCase;
-    private final GetEmailAddressesUseCase getEmailAddressesUseCase;
+    private final SignInInteractor signInInteractor;
+    private final EmailsInteractor emailsInteractor;
 
-    public LoginPresenter(SignInView view, LoginUseCase loginUseCase,
-                          GetEmailAddressesUseCase getEmailAddressesUseCase) {
+    public LoginPresenter(SignInView view, SignInInteractor signInInteractor,
+                          EmailsInteractor emailsInteractor) {
         this.view = view;
-        this.loginUseCase = loginUseCase;
-        this.getEmailAddressesUseCase = getEmailAddressesUseCase;
+        this.signInInteractor = signInInteractor;
+        this.emailsInteractor = emailsInteractor;
     }
 
     public void onAttemptLogin(String email, String password) {
@@ -41,7 +39,7 @@ public class LoginPresenter implements LoginUseCase.Listener, GetEmailAddressesU
 
         if (!cancelled) {
             view.showProgress();
-            loginUseCase.execute(email, password, this);
+            signInInteractor.execute(email, password, this);
         }
     }
 
@@ -66,7 +64,7 @@ public class LoginPresenter implements LoginUseCase.Listener, GetEmailAddressesU
     }
 
     public void onStop() {
-        loginUseCase.cancel();
+        signInInteractor.cancel();
     }
 
     @Override
@@ -76,7 +74,7 @@ public class LoginPresenter implements LoginUseCase.Listener, GetEmailAddressesU
     }
 
     public void onLoadEmailAddresses() {
-        getEmailAddressesUseCase.execute(this);
+        emailsInteractor.execute(this);
     }
 
     @Override

@@ -22,6 +22,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.soflete.signin.LoginPresenter;
 import io.soflete.signin.SignInView;
 
 import static android.Manifest.permission.READ_CONTACTS;

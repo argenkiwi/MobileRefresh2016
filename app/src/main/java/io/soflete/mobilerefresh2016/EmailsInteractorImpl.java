@@ -14,7 +14,7 @@ import io.soflete.signin.EmailsInteractor;
 /**
  * Created by leandro on 22/06/16.
  */
-public class GetEmailAddressesUseCase implements EmailsInteractor,
+public class EmailsInteractorImpl implements EmailsInteractor,
         LoaderManager.LoaderCallbacks<Cursor> {
 
     final int ADDRESS = 0;
@@ -23,7 +23,7 @@ public class GetEmailAddressesUseCase implements EmailsInteractor,
     private final LoaderManager loaderManager;
     private Listener listener;
 
-    public GetEmailAddressesUseCase(Lazy<Loader<Cursor>> lazyLoader, LoaderManager loaderManager) {
+    public EmailsInteractorImpl(Lazy<Loader<Cursor>> lazyLoader, LoaderManager loaderManager) {
         this.lazyLoader = lazyLoader;
         this.loaderManager = loaderManager;
     }

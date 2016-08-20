@@ -8,6 +8,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 
+import io.soflete.signin.LoginPresenter;
+
 import static org.mockito.Mockito.verify;
 
 /**
@@ -22,10 +24,10 @@ public class LoginPresenterTest {
     private LoginView view;
 
     @Mock
-    private LoginUseCase logInUseCase;
+    private SignInInteractorImpl logInUseCase;
 
     @Mock
-    private GetEmailAddressesUseCase getEmailAddressesUseCase;
+    private EmailsInteractorImpl getEmailAddressesUseCase;
 
     @Before
     public void setUp() throws Exception {

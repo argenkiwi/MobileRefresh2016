@@ -7,7 +7,7 @@ import io.soflete.signin.SignInInteractor;
 /**
  * Created by leandro on 20/06/16.
  */
-public class LoginUseCase implements SignInInteractor {
+public class SignInInteractorImpl implements SignInInteractor {
 
     /**
      * A dummy authentication store containing known user names and passwords.
