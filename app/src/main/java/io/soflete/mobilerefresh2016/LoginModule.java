@@ -14,6 +14,7 @@ import dagger.Provides;
 import io.soflete.signin.EmailsInteractor;
 import io.soflete.signin.SignInInteractor;
 import io.soflete.signin.SignInPresenter;
+import io.soflete.signin.SignInRouter;
 import io.soflete.signin.SignInView;
 
 /**
@@ -22,27 +23,18 @@ import io.soflete.signin.SignInView;
 @Module
 public class LoginModule {
 
-    private SignInView view;
+    private final SignInView view;
+    private final SignInRouter router;
 
-    public LoginModule(SignInView view) {
+    public LoginModule(SignInView view, SignInRouter router) {
         this.view = view;
+        this.router = router;
     }
 
     @Provides
     public EmailsInteractor provideEmailsInteractor(Lazy<Loader<Cursor>> lazyLoader,
                                                     LoaderManager loaderManager) {
         return new EmailsInteractorImpl(lazyLoader, loaderManager);
-    }
-
-    @Provides
-    public SignInInteractor provideLoginUseCase() {
-        return new SignInInteractorImpl();
-    }
-
-    @Provides
-    public SignInPresenter providePresenter(SignInInteractor signInInteractor,
-                                            EmailsInteractor emailsInteractor) {
-        return new SignInPresenter(view, signInInteractor, emailsInteractor);
     }
 
     @Provides
@@ -65,5 +57,16 @@ public class LoginModule {
                 // Show primary email addresses first. Note that there won't be
                 // a primary email address if the user hasn't specified one.
                 ContactsContract.Contacts.Data.IS_PRIMARY + " DESC");
+    }
+
+    @Provides
+    public SignInPresenter providePresenter(SignInInteractor signInInteractor,
+                                            EmailsInteractor emailsInteractor) {
+        return new SignInPresenter(view, router, signInInteractor, emailsInteractor);
+    }
+
+    @Provides
+    public SignInInteractor provideSignInInteractor() {
+        return new SignInInteractorImpl();
     }
 }

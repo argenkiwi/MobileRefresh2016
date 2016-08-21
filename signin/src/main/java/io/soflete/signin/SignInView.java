@@ -6,15 +6,17 @@ import java.util.List;
  * Created by leandro on 19/06/16.
  */
 public interface SignInView {
-    void clearErrors();
+    void addEmailsToAutoComplete(List<String> emails);
 
-    void finish();
+    void clearErrors();
 
     void focusOnEmail();
 
     void focusOnPassword();
 
     void hideProgress();
+
+    void populateAutoComplete();
 
     void showEmailInvalidError();
 
@@ -25,8 +27,4 @@ public interface SignInView {
     void showPasswordTooShortError();
 
     void showProgress();
-
-    void addEmailsToAutoComplete(List<String> emails);
-
-    void populateAutoComplete();
 }

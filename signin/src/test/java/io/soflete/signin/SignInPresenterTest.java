@@ -22,6 +22,9 @@ public class SignInPresenterTest {
     private SignInView view;
 
     @Mock
+    private SignInRouter router;
+
+    @Mock
     private SignInInteractor signInInteractor;
 
     @Mock
@@ -29,13 +32,20 @@ public class SignInPresenterTest {
 
     @Before
     public void setUp() throws Exception {
-        presenter = new SignInPresenter(view, signInInteractor, emailsInteractor);
+        presenter = new SignInPresenter(view, router, signInInteractor, emailsInteractor);
     }
 
     @Test
     public void shoudClearErrors() {
         presenter.onAttemptLogin(null, null);
         verify(view).clearErrors();
+    }
+
+    @Test
+    public void shouldAddEmailAddresses() {
+        final ArrayList<String> emails = new ArrayList<>();
+        presenter.onEmailAddressesLoaded(emails);
+        verify(view).addEmailsToAutoComplete(emails);
     }
 
     @Test
@@ -50,12 +60,6 @@ public class SignInPresenterTest {
     public void shouldCancelLoginAttempt() {
         presenter.onStop();
         verify(signInInteractor).cancel();
-    }
-
-    @Test
-    public void shouldFinish() {
-        presenter.onSuccess();
-        verify(view).finish();
     }
 
     @Test
@@ -101,6 +105,24 @@ public class SignInPresenterTest {
     }
 
     @Test
+    public void shouldLoadEmailAddresses() {
+        presenter.onLoadEmailAddresses();
+        verify(emailsInteractor).execute(presenter);
+    }
+
+    @Test
+    public void shouldPopulateAutoComplete() {
+        presenter.onStart();
+        verify(view).populateAutoComplete();
+    }
+
+    @Test
+    public void shouldRouteSuccess() {
+        presenter.onSuccess();
+        verify(router).onSuccess();
+    }
+
+    @Test
     public void shouldShowEmailInvalidError() {
         // TODO Test more scenarios?
         presenter.onAttemptLogin("notanemail", null);
@@ -129,24 +151,5 @@ public class SignInPresenterTest {
     public void shouldShowProgress() {
         presenter.onAttemptLogin("valid@email.yes", "12345");
         verify(view).showProgress();
-    }
-
-    @Test
-    public void shouldPopulateAutoComplete() {
-        presenter.onStart();
-        verify(view).populateAutoComplete();
-    }
-
-    @Test
-    public void shouldLoadEmailAddresses() {
-        presenter.onLoadEmailAddresses();
-        verify(emailsInteractor).execute(presenter);
-    }
-
-    @Test
-    public void shouldAddEmailAddresses() {
-        final ArrayList<String> emails = new ArrayList<>();
-        presenter.onEmailAddressesLoaded(emails);
-        verify(view).addEmailsToAutoComplete(emails);
     }
 }

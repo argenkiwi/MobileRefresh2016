@@ -54,11 +54,6 @@ public class SignInFragment extends Fragment implements SignInView {
     }
 
     @Override
-    public void finish() {
-        getActivity().finish();
-    }
-
-    @Override
     public void focusOnEmail() {
         mEmailView.requestFocus();
     }
@@ -98,7 +93,7 @@ public class SignInFragment extends Fragment implements SignInView {
             activity = (Activity) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString()
-                    + " must implement OnHeadlineSelectedListener");
+                    + " must implement SignInFragment.Activity");
         }
 
         loginPresenter = activity.getPresenter(this);

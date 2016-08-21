@@ -8,18 +8,19 @@ import javax.inject.Inject;
 
 import io.soflete.signin.SignInFragment;
 import io.soflete.signin.SignInPresenter;
+import io.soflete.signin.SignInRouter;
 import io.soflete.signin.SignInView;
 
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends AppCompatActivity implements SignInFragment.Activity{
+public class LoginActivity extends AppCompatActivity implements SignInFragment.Activity, SignInRouter {
     
     @Override
     public SignInPresenter getPresenter(SignInView view) {
         return DaggerLoginComponent.builder()
                 .fragmentActivityModule(new FragmentActivityModule(this))
-                .loginModule(new LoginModule(view))
+                .loginModule(new LoginModule(view, this))
                 .build().getPresenter();
     }
 
@@ -31,6 +32,11 @@ public class LoginActivity extends AppCompatActivity implements SignInFragment.A
                     .add(android.R.id.content, new SignInFragment())
                     .commit();
         }
+    }
+
+    @Override
+    public void onSuccess() {
+        finish();
     }
 }
 

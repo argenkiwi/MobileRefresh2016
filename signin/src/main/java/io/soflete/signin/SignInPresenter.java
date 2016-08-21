@@ -7,12 +7,14 @@ import java.util.List;
  */
 public class SignInPresenter implements SignInInteractor.Listener, EmailsInteractor.Listener {
     private final SignInView view;
+    private final SignInRouter router;
     private final SignInInteractor signInInteractor;
     private final EmailsInteractor emailsInteractor;
 
-    public SignInPresenter(SignInView view, SignInInteractor signInInteractor,
+    public SignInPresenter(SignInView view, SignInRouter router,SignInInteractor signInInteractor,
                            EmailsInteractor emailsInteractor) {
         this.view = view;
+        this.router = router;
         this.signInInteractor = signInInteractor;
         this.emailsInteractor = emailsInteractor;
     }
@@ -70,7 +72,7 @@ public class SignInPresenter implements SignInInteractor.Listener, EmailsInterac
     @Override
     public void onSuccess() {
         view.hideProgress();
-        view.finish();
+        router.onSuccess();
     }
 
     public void onLoadEmailAddresses() {
